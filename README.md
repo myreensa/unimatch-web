@@ -4,7 +4,7 @@ UniMatch is a personal hobby project, creating and exploring a different approac
 
 # UniMatch Idea
 
-The idea is to encourage meaningful connections by preventing users from endlessly swiping and falling into a consumer loophole opening multiple new conversations always chasing better.
+The idea is to encourage meaningful connections by preventing users from endlessly swiping and falling into a consumer loophole opening multiple new conversations, always chasing better a match and instead focusing on one current quality match.
 
 Unimatch focuses on one real-time connection, which can suit many individuals better.
 
