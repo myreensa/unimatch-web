@@ -228,12 +228,11 @@ function createProfile(event) {
     .map(interest => interest.trim())
     .filter(interest => interest.length > 0)
 };
-  };
 
   saveState();
   state.screen = "discover";
   render();
-}
+};
 
 function renderDiscover() {
   if (state.activeMatch) {
