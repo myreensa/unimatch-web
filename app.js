@@ -104,45 +104,109 @@ function renderSignup() {
     <div class="app-shell">
       <main class="phone">
         <section class="screen">
+
           <div class="topbar">
             <button class="icon-btn" onclick="go('welcome')">←</button>
-            <div class="logo">Uni<span>Match</span></div>
+
+            <div class="logo">
+              Uni<span>Match</span>
+            </div>
+
             <div></div>
           </div>
 
           <h1>Create your profile</h1>
+
           <p class="subtext">
-            Keep it simple. The goal is to help someone understand who you are.
+            Tell people a little about yourself.
+            Your profile is your first impression.
           </p>
 
           <form class="form" onsubmit="createProfile(event)">
+
             <div class="field">
               <label for="name">First name</label>
-              <input id="name" required maxlength="30" placeholder="Your first name">
+
+              <input
+                id="name"
+                type="text"
+                placeholder="Alex"
+                required
+                maxlength="30"
+              >
             </div>
+
 
             <div class="field">
               <label for="age">Age</label>
-              <input id="age" required type="number" min="18" max="99" placeholder="21">
+
+              <input
+                id="age"
+                type="number"
+                placeholder="21"
+                min="18"
+                max="99"
+                required
+              >
             </div>
+
 
             <div class="field">
               <label for="university">University</label>
-              <input id="university" required maxlength="60" placeholder="Your university">
+
+              <input
+                id="university"
+                type="text"
+                placeholder="University of Helsinki"
+                required
+              >
             </div>
+
 
             <div class="field">
               <label for="field">What do you study?</label>
-              <input id="field" required maxlength="60" placeholder="Computer Science">
+
+              <input
+                id="field"
+                type="text"
+                placeholder="Computer Science"
+                required
+              >
             </div>
+
 
             <div class="field">
               <label for="bio">About you</label>
-              <textarea id="bio" required maxlength="300" placeholder="Tell people something about yourself..."></textarea>
+
+              <textarea
+                id="bio"
+                placeholder="Tell people something interesting about yourself..."
+                maxlength="300"
+                required
+              ></textarea>
             </div>
 
-            <button class="btn btn-primary" type="submit">Create profile</button>
+            <div class="field">
+  <label for="interests">Interests</label>
+
+  <input
+    id="interests"
+    type="text"
+    placeholder="Music, travel, gym, gaming"
+    maxlength="100"
+  >
+</div>
+
+
+            <button
+              class="btn btn-primary"re
+              type="submit"
+            >
+              Continue
+            </button>
+
           </form>
+
         </section>
       </main>
     </div>
@@ -152,13 +216,18 @@ function renderSignup() {
 function createProfile(event) {
   event.preventDefault();
 
-  state.user = {
-    id: "me",
-    name: document.getElementById("name").value.trim(),
-    age: Number(document.getElementById("age").value),
-    university: document.getElementById("university").value.trim(),
-    field: document.getElementById("field").value.trim(),
-    bio: document.getElementById("bio").value.trim()
+    state.user = {
+  id: "me",
+  name: document.getElementById("name").value.trim(),
+  age: Number(document.getElementById("age").value),
+  university: document.getElementById("university").value.trim(),
+  field: document.getElementById("field").value.trim(),
+  bio: document.getElementById("bio").value.trim(),
+  interests: document.getElementById("interests").value
+    .split(",")
+    .map(interest => interest.trim())
+    .filter(interest => interest.length > 0)
+};
   };
 
   saveState();
@@ -366,6 +435,9 @@ function renderProfile() {
             <div class="badge">${escapeHtml(user.field)}</div>
             <p class="bio">${escapeHtml(user.bio)}</p>
           </div>
+          <div class="badge">
+  ${user.interests.map(interest => escapeHtml(interest)).join(" · ")}
+</div>
 
           <button class="btn btn-secondary" onclick="resetPrototype()">
             Reset prototype
