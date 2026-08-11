@@ -1,6 +1,6 @@
 # UniMatch
 
-UniMatch is a personal hobby project, creatin and exploring a different approach to modern online dating apps.
+UniMatch is a personal hobby project, creating and exploring a different approach to modern online dating apps.
 
 # UniMatch Idea
 
