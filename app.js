@@ -10,6 +10,7 @@
   - Later, Firebase will replace this with real users and real likes.
 */
 
+
 const profiles = [
   {
     id: 1,
@@ -17,34 +18,108 @@ const profiles = [
     age: 21,
     university: "University of Helsinki",
     field: "Computer Science",
-    photo: "images/alex.jpg",
+
     bio: "Coffee, climbing, and building little projects. Looking for someone who enjoys good conversations.",
+
     initials: "A",
-    interests: ["Coffee", "Climbing", "Programming"]
+
+    photos: [
+      "images/alex.jpg",
+      "images/alex2.jpg",
+      "images/alex3.jpg"
+    ],
+
+    interests: [
+      "Coffee",
+      "Climbing",
+      "Programming"
+    ],
+
+    prompts: [
+      {
+        question: "My ideal Sunday...",
+        answer: "Coffee, climbing and a movie in the evening."
+      },
+      {
+        question: "Something I'm passionate about...",
+        answer: "Building things and learning how they work."
+      }
+    ]
   },
+
+
   {
     id: 2,
     name: "Maya",
     age: 22,
     university: "Aalto University",
     field: "Business",
-    photo: "images/maya.jpg",
-    bio: "I love live music, travelling and finding new places to eat. Always up for a thoughtful conversation.",
+
+    bio: "I love live music, travelling and finding new places to eat.",
+
     initials: "M",
-    interests: ["Music", "Travel", "Food"]
+
+    photos: [
+      "images/maya.jpg",
+      "images/maya2.jpg",
+      "images/maya3.jpg"
+    ],
+
+    interests: [
+      "Music",
+      "Travel",
+      "Food"
+    ],
+
+    prompts: [
+      {
+        question: "My ideal weekend...",
+        answer: "Exploring a new city with good food and good company."
+      },
+      {
+        question: "A random fact about me...",
+        answer: "I've visited more coffee shops than I can count."
+      }
+    ]
   },
+
+
   {
     id: 3,
     name: "Leo",
     age: 23,
     university: "University of Helsinki",
     field: "Engineering",
-    photo: "images/leo.jpg",
+
     bio: "Gym, gaming and photography. I'd rather have one great conversation than twenty random matches.",
+
     initials: "L",
-    interests: ["Gym", "Gaming", "Photography"]
+
+    photos: [
+      "images/leo.jpg",
+      "images/leo2.jpg",
+      "images/leo3.jpg"
+    ],
+
+    interests: [
+      "Gym",
+      "Gaming",
+      "Photography"
+    ],
+
+    prompts: [
+      {
+        question: "My ideal Sunday...",
+        answer: "Gym in the morning, gaming in the afternoon and good food later."
+      },
+      {
+        question: "Something I could talk about for hours...",
+        answer: "Technology, games and photography."
+      }
+    ]
   }
 ];
+
 
 
 /*
@@ -62,7 +137,9 @@ const profiles = [
         =
       MATCH
 */
+
 const incomingLikes = [1];
+
 
 
 const state = {
@@ -76,7 +153,9 @@ const state = {
 };
 
 
+
 const app = document.getElementById("app");
+
 
 
 /* =========================
@@ -84,6 +163,7 @@ const app = document.getElementById("app");
 ========================= */
 
 function saveState() {
+
   localStorage.setItem(
     "unimatch_user",
     JSON.stringify(state.user)
@@ -111,11 +191,13 @@ function saveState() {
 }
 
 
+
 /* =========================
    SECURITY / HTML ESCAPING
 ========================= */
 
 function escapeHtml(value) {
+
   return String(value)
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
@@ -125,18 +207,26 @@ function escapeHtml(value) {
 }
 
 
+
 /* =========================
    RENDER
 ========================= */
 
 function render() {
+
   if (state.screen === "welcome") renderWelcome();
+
   if (state.screen === "signup") renderSignup();
+
   if (state.screen === "discover") renderDiscover();
+
   if (state.screen === "match") renderMatch();
+
   if (state.screen === "chat") renderChat();
+
   if (state.screen === "profile") renderProfile();
 }
+
 
 
 /* =========================
@@ -144,8 +234,10 @@ function render() {
 ========================= */
 
 function renderWelcome() {
+
   app.innerHTML = `
     <div class="app-shell">
+
       <main class="phone">
 
         <section class="screen center-screen">
@@ -185,9 +277,11 @@ function renderWelcome() {
         </section>
 
       </main>
+
     </div>
   `;
 }
+
 
 
 /* =========================
@@ -195,8 +289,10 @@ function renderWelcome() {
 ========================= */
 
 function renderSignup() {
+
   app.innerHTML = `
     <div class="app-shell">
+
       <main class="phone">
 
         <section class="screen">
@@ -231,6 +327,7 @@ function renderSignup() {
           >
 
             <div class="field">
+
               <label for="name">
                 First name
               </label>
@@ -242,10 +339,12 @@ function renderSignup() {
                 required
                 maxlength="30"
               >
+
             </div>
 
 
             <div class="field">
+
               <label for="age">
                 Age
               </label>
@@ -258,10 +357,12 @@ function renderSignup() {
                 max="99"
                 required
               >
+
             </div>
 
 
             <div class="field">
+
               <label for="university">
                 University
               </label>
@@ -272,10 +373,12 @@ function renderSignup() {
                 placeholder="University of Helsinki"
                 required
               >
+
             </div>
 
 
             <div class="field">
+
               <label for="field">
                 What do you study?
               </label>
@@ -286,10 +389,12 @@ function renderSignup() {
                 placeholder="Computer Science"
                 required
               >
+
             </div>
 
 
             <div class="field">
+
               <label for="bio">
                 About you
               </label>
@@ -300,6 +405,7 @@ function renderSignup() {
                 maxlength="300"
                 required
               ></textarea>
+
             </div>
 
 
@@ -331,9 +437,11 @@ function renderSignup() {
         </section>
 
       </main>
+
     </div>
   `;
 }
+
 
 
 /* =========================
@@ -341,7 +449,9 @@ function renderSignup() {
 ========================= */
 
 function createProfile(event) {
+
   event.preventDefault();
+
 
   const interests = document
     .getElementById("interests")
@@ -352,22 +462,46 @@ function createProfile(event) {
 
 
   state.user = {
+
     id: "me",
-    name: document.getElementById("name").value.trim(),
-    age: Number(document.getElementById("age").value),
-    university: document.getElementById("university").value.trim(),
-    field: document.getElementById("field").value.trim(),
-    bio: document.getElementById("bio").value.trim(),
+
+    name: document
+      .getElementById("name")
+      .value
+      .trim(),
+
+    age: Number(
+      document.getElementById("age").value
+    ),
+
+    university: document
+      .getElementById("university")
+      .value
+      .trim(),
+
+    field: document
+      .getElementById("field")
+      .value
+      .trim(),
+
+    bio: document
+      .getElementById("bio")
+      .value
+      .trim(),
+
     interests: interests
   };
 
 
   saveState();
 
+
   state.screen = "discover";
+
 
   render();
 }
+
 
 
 /* =========================
@@ -384,15 +518,21 @@ function renderDiscover() {
   */
 
   if (state.activeMatch) {
+
     renderMatch();
+
     return;
   }
 
 
   const available = profiles.filter(
+
     profile =>
+
       !state.passed.includes(profile.id) &&
+
       !state.likes.includes(profile.id)
+
   );
 
 
@@ -400,6 +540,7 @@ function renderDiscover() {
 
 
   app.innerHTML = `
+
     <div class="app-shell">
 
       <main class="phone">
@@ -450,17 +591,57 @@ function renderDiscover() {
 
                 <article class="profile-card">
 
-                 <div class="profile-photo">
 
-  <img
-    src="${escapeHtml(profile.photo)}"
-    alt="${escapeHtml(profile.name)}"
-  >
+                  <div class="profile-photo">
 
-</div>
+                    <img
+                      id="profileImage"
+                      src="${escapeHtml(profile.photos[0])}"
+                      alt="${escapeHtml(profile.name)}"
+                    >
+
+
+                    <button
+                      class="photo-arrow photo-prev"
+                      onclick="previousPhoto(${profile.id})"
+                    >
+                      ‹
+                    </button>
+
+
+                    <button
+                      class="photo-arrow photo-next"
+                      onclick="nextPhoto(${profile.id})"
+                    >
+                      ›
+                    </button>
+
+
+                    <div class="photo-indicators">
+
+                      ${profile.photos
+                        .map(
+                          (_, index) => `
+
+                            <span
+                              class="photo-dot ${
+                                index === 0
+                                  ? "active"
+                                  : ""
+                              }"
+                            ></span>
+
+                          `
+                        )
+                        .join("")}
+
+                    </div>
+
+                  </div>
 
 
                   <div class="profile-info">
+
 
                     <div class="profile-name">
                       ${escapeHtml(profile.name)}, ${profile.age}
@@ -468,7 +649,7 @@ function renderDiscover() {
 
 
                     <div class="profile-meta">
-                      ${escapeHtml(profile.university)}
+                      🎓 ${escapeHtml(profile.university)}
                     </div>
 
 
@@ -483,24 +664,68 @@ function renderDiscover() {
 
 
                     ${
+                      profile.prompts
+                        ? profile.prompts
+                            .map(
+                              prompt => `
+
+                                <div class="profile-prompt">
+
+                                  <div class="prompt-question">
+                                    ${escapeHtml(prompt.question)}
+                                  </div>
+
+                                  <div class="prompt-answer">
+                                    ${escapeHtml(prompt.answer)}
+                                  </div>
+
+                                </div>
+
+                              `
+                            )
+                            .join("")
+                        : ""
+                    }
+
+
+                    ${
                       profile.interests &&
                       profile.interests.length
                         ? `
-                          <div class="badge">
-                            ${profile.interests
-                              .map(interest => escapeHtml(interest))
-                              .join(" · ")}
+
+                          <div class="interests-title">
+                            Interests
                           </div>
+
+                          <div class="interest-tags">
+
+                            ${profile.interests
+                              .map(
+                                interest => `
+
+                                  <span class="interest-tag">
+                                    ${escapeHtml(interest)}
+                                  </span>
+
+                                `
+                              )
+                              .join("")}
+
+                          </div>
+
                         `
                         : ""
                     }
 
+
                   </div>
+
 
                 </article>
 
 
                 <div class="actions">
+
 
                   <button
                     class="action-btn pass"
@@ -518,6 +743,7 @@ function renderDiscover() {
                     ♥
                     <span>Like</span>
                   </button>
+
 
                 </div>
 
@@ -557,16 +783,122 @@ function renderDiscover() {
               `
           }
 
+
         </section>
 
 
         ${nav("discover")}
 
+
       </main>
 
+
     </div>
+
   `;
 }
+
+
+
+/* =========================
+   PHOTO NAVIGATION
+========================= */
+
+let currentPhotoIndex = 0;
+
+
+function nextPhoto(id) {
+
+  const profile = profiles.find(
+    profile => profile.id === id
+  );
+
+
+  if (!profile) {
+
+    return;
+
+  }
+
+
+  currentPhotoIndex++;
+
+
+  if (
+    currentPhotoIndex >= profile.photos.length
+  ) {
+
+    currentPhotoIndex = 0;
+
+  }
+
+
+  updateProfilePhoto(profile);
+}
+
+
+
+function previousPhoto(id) {
+
+  const profile = profiles.find(
+    profile => profile.id === id
+  );
+
+
+  if (!profile) {
+
+    return;
+
+  }
+
+
+  currentPhotoIndex--;
+
+
+  if (currentPhotoIndex < 0) {
+
+    currentPhotoIndex =
+      profile.photos.length - 1;
+
+  }
+
+
+  updateProfilePhoto(profile);
+}
+
+
+
+function updateProfilePhoto(profile) {
+
+  const image =
+    document.getElementById("profileImage");
+
+
+  if (!image) {
+
+    return;
+
+  }
+
+
+  image.src =
+    profile.photos[currentPhotoIndex];
+
+
+  const dots =
+    document.querySelectorAll(".photo-dot");
+
+
+  dots.forEach((dot, index) => {
+
+    dot.classList.toggle(
+      "active",
+      index === currentPhotoIndex
+    );
+
+  });
+}
+
 
 
 /* =========================
@@ -576,13 +908,18 @@ function renderDiscover() {
 function passProfile(id) {
 
   if (!state.passed.includes(id)) {
+
     state.passed.push(id);
+
   }
+
 
   saveState();
 
+
   render();
 }
+
 
 
 /* =========================
@@ -615,6 +952,7 @@ function checkForMatch(profileId) {
 }
 
 
+
 /* =========================
    LIKE
 ========================= */
@@ -626,7 +964,9 @@ function likeProfile(id) {
 
 
   if (!profile) {
+
     return;
+
   }
 
 
@@ -642,6 +982,7 @@ function likeProfile(id) {
     );
 
     return;
+
   }
 
 
@@ -670,10 +1011,12 @@ function likeProfile(id) {
 
 
     state.messages = [
+
       {
         sender: "them",
         text: `Hey ${state.user.name}! Nice to match with you.`
       }
+
     ];
 
 
@@ -694,8 +1037,10 @@ function likeProfile(id) {
 
   saveState();
 
+
   render();
 }
+
 
 
 /* =========================
@@ -706,50 +1051,66 @@ function renderMatch() {
 
   const match = state.activeMatch;
 
+
   if (!match) {
+
     state.screen = "discover";
+
     render();
+
     return;
+
   }
 
+
   app.innerHTML = `
+
     <div class="app-shell">
 
       <main class="phone">
 
         <section class="screen center-screen">
 
+
           <div class="logo">
             Uni<span>Match</span>
           </div>
 
+
           <div class="match-card">
+
 
             <div class="match-avatar">
               ${escapeHtml(match.initials)}
             </div>
 
+
             <div class="match-hearts">
               ♥ ♥
             </div>
+
 
             <h1>
               It's a match!
             </h1>
 
+
             <p class="match-name">
               You and ${escapeHtml(match.name)}
             </p>
 
+
             <p class="subtext">
               You both liked each other.
             </p>
+
 
             <div class="one-match-box">
 
               <strong>
                 This is your one active match.
               </strong>
+
 
               <p>
                 Take your time getting to know each other.
@@ -759,12 +1120,14 @@ function renderMatch() {
 
             </div>
 
+
             <button
               class="btn btn-primary"
               onclick="go('chat')"
             >
               Start chatting
             </button>
+
 
             <button
               class="btn btn-secondary"
@@ -773,23 +1136,24 @@ function renderMatch() {
               End match
             </button>
 
+
           </div>
 
+
         </section>
-
-      </main>
-
-    </div>
-
 
 
         ${nav("match")}
 
+
       </main>
 
+
     </div>
+
   `;
 }
+
 
 
 /* =========================
@@ -808,17 +1172,21 @@ function renderChat() {
     render();
 
     return;
+
   }
 
 
   app.innerHTML = `
+
     <div class="app-shell">
 
       <main class="phone">
 
         <section class="screen chat">
 
+
           <div class="topbar">
+
 
             <button
               class="icon-btn"
@@ -834,6 +1202,7 @@ function renderChat() {
                 ${escapeHtml(match.name)}
               </strong>
 
+
               <div class="profile-meta">
                 Your active match
               </div>
@@ -847,6 +1216,7 @@ function renderChat() {
             >
               End
             </button>
+
 
           </div>
 
@@ -879,6 +1249,7 @@ function renderChat() {
             onsubmit="sendMessage(event)"
           >
 
+
             <input
               id="messageInput"
               maxlength="500"
@@ -891,18 +1262,24 @@ function renderChat() {
               Send
             </button>
 
+
           </form>
+
 
         </section>
 
 
         ${nav("chat")}
 
+
       </main>
 
+
     </div>
+
   `;
 }
+
 
 
 /* =========================
@@ -923,7 +1300,9 @@ function sendMessage(event) {
 
 
   if (!text) {
+
     return;
+
   }
 
 
@@ -938,8 +1317,10 @@ function sendMessage(event) {
 
   saveState();
 
+
   render();
 }
+
 
 
 /* =========================
@@ -958,15 +1339,18 @@ function renderProfile() {
     render();
 
     return;
+
   }
 
 
   app.innerHTML = `
+
     <div class="app-shell">
 
       <main class="phone">
 
         <section class="screen">
+
 
           <div class="topbar">
 
@@ -978,6 +1362,7 @@ function renderProfile() {
 
 
           <div class="match-card">
+
 
             <div class="match-avatar">
 
@@ -1012,17 +1397,22 @@ function renderProfile() {
               user.interests &&
               user.interests.length
                 ? `
+
                   <div class="badge">
+
                     ${user.interests
                       .map(
                         interest =>
                           escapeHtml(interest)
                       )
                       .join(" · ")}
+
                   </div>
+
                 `
                 : ""
             }
+
 
           </div>
 
@@ -1034,16 +1424,21 @@ function renderProfile() {
             Reset prototype
           </button>
 
+
         </section>
 
 
         ${nav("profile")}
 
+
       </main>
 
+
     </div>
+
   `;
 }
+
 
 
 /* =========================
@@ -1055,6 +1450,7 @@ function nav(active) {
   return `
 
     <nav class="nav">
+
 
       <button
         class="${
@@ -1102,10 +1498,12 @@ function nav(active) {
         Profile
       </button>
 
+
     </nav>
 
   `;
 }
+
 
 
 /* =========================
@@ -1148,8 +1546,10 @@ function go(screen) {
 
   state.screen = screen;
 
+
   render();
 }
+
 
 
 /* =========================
@@ -1159,7 +1559,9 @@ function go(screen) {
 function endMatch() {
 
   if (!state.activeMatch) {
+
     return;
+
   }
 
 
@@ -1169,7 +1571,9 @@ function endMatch() {
 
 
   if (!confirmed) {
+
     return;
+
   }
 
 
@@ -1199,8 +1603,10 @@ function endMatch() {
 
   state.screen = "discover";
 
+
   render();
 }
+
 
 
 /* =========================
@@ -1213,17 +1619,21 @@ function resetPrototype() {
     "unimatch_user"
   );
 
+
   localStorage.removeItem(
     "unimatch_match"
   );
+
 
   localStorage.removeItem(
     "unimatch_passed"
   );
 
+
   localStorage.removeItem(
     "unimatch_likes"
   );
+
 
   localStorage.removeItem(
     "unimatch_messages"
@@ -1232,19 +1642,25 @@ function resetPrototype() {
 
   state.user = null;
 
+
   state.activeMatch = null;
+
 
   state.passed = [];
 
+
   state.likes = [];
 
+
   state.messages = [];
+
 
   state.screen = "welcome";
 
 
   render();
 }
+
 
 
 /* =========================

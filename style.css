@@ -450,3 +450,146 @@ button {
   object-fit: cover;
   display: block;
 }
+
+.profile-photo {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  overflow: hidden;
+  border-radius: 18px;
+  margin-bottom: 18px;
+}
+
+.profile-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+
+.photo-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 42px;
+  height: 42px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(0, 0, 0, 0.45);
+  color: white;
+
+  font-size: 32px;
+  line-height: 35px;
+
+  cursor: pointer;
+
+  z-index: 2;
+}
+
+
+.photo-arrow:hover {
+  background: rgba(0, 0, 0, 0.65);
+}
+
+
+.photo-prev {
+  left: 12px;
+}
+
+
+.photo-next {
+  right: 12px;
+}
+
+
+.photo-indicators {
+  position: absolute;
+
+  top: 12px;
+  left: 12px;
+  right: 12px;
+
+  display: flex;
+  gap: 5px;
+
+  z-index: 2;
+}
+
+
+.photo-dot {
+  height: 4px;
+  flex: 1;
+
+  border-radius: 5px;
+
+  background: rgba(255, 255, 255, 0.45);
+}
+
+
+.photo-dot.active {
+  background: white;
+}
+
+
+/* Profile prompts */
+
+.profile-prompt {
+  margin-top: 20px;
+  padding: 16px;
+
+  border-radius: 16px;
+
+  background: rgba(255, 255, 255, 0.06);
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+
+.prompt-question {
+  font-size: 13px;
+  font-weight: 600;
+
+  opacity: 0.65;
+
+  margin-bottom: 7px;
+}
+
+
+.prompt-answer {
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+
+/* Interests */
+
+.interests-title {
+  margin-top: 20px;
+  margin-bottom: 10px;
+
+  font-weight: 600;
+}
+
+
+.interest-tags {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 8px;
+}
+
+
+.interest-tag {
+  padding: 7px 12px;
+
+  border-radius: 999px;
+
+  background: rgba(110, 70, 255, 0.12);
+
+  font-size: 13px;
+}
