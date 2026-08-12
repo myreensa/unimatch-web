@@ -17,6 +17,7 @@ const profiles = [
     age: 21,
     university: "University of Helsinki",
     field: "Computer Science",
+    photo: "images/alex.jpg",
     bio: "Coffee, climbing, and building little projects. Looking for someone who enjoys good conversations.",
     initials: "A",
     interests: ["Coffee", "Climbing", "Programming"]
@@ -27,6 +28,7 @@ const profiles = [
     age: 22,
     university: "Aalto University",
     field: "Business",
+    photo: "images/maya.jpg",
     bio: "I love live music, travelling and finding new places to eat. Always up for a thoughtful conversation.",
     initials: "M",
     interests: ["Music", "Travel", "Food"]
@@ -37,6 +39,7 @@ const profiles = [
     age: 23,
     university: "University of Helsinki",
     field: "Engineering",
+    photo: "images/leo.jpg",
     bio: "Gym, gaming and photography. I'd rather have one great conversation than twenty random matches.",
     initials: "L",
     interests: ["Gym", "Gaming", "Photography"]
@@ -447,13 +450,14 @@ function renderDiscover() {
 
                 <article class="profile-card">
 
-                  <div class="profile-photo">
+                 <div class="profile-photo">
 
-                    <div class="initials">
-                      ${escapeHtml(profile.initials)}
-                    </div>
+  <img
+    src="${escapeHtml(profile.photo)}"
+    alt="${escapeHtml(profile.name)}"
+  >
 
-                  </div>
+</div>
 
 
                   <div class="profile-info">
