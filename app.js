@@ -240,53 +240,127 @@ function renderDiscover() {
     return;
   }
 
-  const available = profiles.filter(p => !state.passed.includes(p.id));
+  const available = profiles.filter(
+    profile => !state.passed.includes(profile.id)
+  );
+
   const profile = available[0];
 
   app.innerHTML = `
     <div class="app-shell">
       <main class="phone">
+
         <section class="screen">
+
           <div class="topbar">
-            <div class="logo">Uni<span>Match</span></div>
-            <button class="icon-btn" onclick="go('profile')">Profile</button>
+            <div>
+              <div class="logo">
+                Uni<span>Match</span>
+              </div>
+              <div class="profile-meta">
+                One match at a time.
+              </div>
+            </div>
+
+            <button
+              class="icon-btn"
+              onclick="go('profile')"
+            >
+              Profile
+            </button>
           </div>
 
-          ${profile ? `
-            <p class="subtext">Take your time. You only need one match.</p>
+          ${
+            profile
+              ? `
+                <div class="discover-header">
+                  <h1>Someone new</h1>
 
-            <article class="profile-card">
-              <div class="profile-photo">
-                <div class="initials">${escapeHtml(profile.initials)}</div>
-              </div>
-
-              <div class="profile-info">
-                <div class="profile-name">${escapeHtml(profile.name)}, ${profile.age}</div>
-                <div class="profile-meta">
-                  ${escapeHtml(profile.university)} · ${escapeHtml(profile.field)}
+                  <p class="subtext">
+                    Take your time. You only need one person.
+                  </p>
                 </div>
-                <div class="badge">Student</div>
-                <p class="bio">${escapeHtml(profile.bio)}</p>
-              </div>
-            </article>
 
-            <div class="actions">
-              <button class="action-btn pass" onclick="passProfile(${profile.id})">Pass</button>
-              <button class="action-btn like" onclick="likeProfile(${profile.id})">Like</button>
-            </div>
-          ` : `
-            <div class="match-card">
-              <h2>No more profiles</h2>
-              <p class="subtext">
-                You've reached the end of this demo's profiles.
-                Reset the prototype to start again.
-              </p>
-              <button class="btn btn-secondary" onclick="resetPrototype()">Reset demo</button>
-            </div>
-          `}
+                <article class="profile-card">
+
+                  <div class="profile-photo">
+                    <div class="initials">
+                      ${escapeHtml(profile.initials)}
+                    </div>
+                  </div>
+
+                  <div class="profile-info">
+
+                    <div class="profile-name">
+                      ${escapeHtml(profile.name)}, ${profile.age}
+                    </div>
+
+                    <div class="profile-meta">
+                      ${escapeHtml(profile.university)}
+                    </div>
+
+                    <div class="badge">
+                      ${escapeHtml(profile.field)}
+                    </div>
+
+                    <p class="bio">
+                      ${escapeHtml(profile.bio)}
+                    </p>
+
+                  </div>
+
+                </article>
+
+                <div class="actions">
+
+                  <button
+                    class="action-btn pass"
+                    onclick="passProfile(${profile.id})"
+                  >
+                    ✕
+                    <span>Pass</span>
+                  </button>
+
+                  <button
+                    class="action-btn like"
+                    onclick="likeProfile(${profile.id})"
+                  >
+                    ♥
+                    <span>Like</span>
+                  </button>
+
+                </div>
+
+                <div class="notice">
+                  <strong>Remember:</strong>
+                  once you match, you'll focus on that person
+                  instead of continuing to swipe.
+                </div>
+              `
+              : `
+                <div class="match-card">
+
+                  <h2>No more profiles</h2>
+
+                  <p class="subtext">
+                    You've reached the end of the demo.
+                  </p>
+
+                  <button
+                    class="btn btn-secondary"
+                    onclick="resetPrototype()"
+                  >
+                    Reset demo
+                  </button>
+
+                </div>
+              `
+          }
+
         </section>
 
         ${nav("discover")}
+
       </main>
     </div>
   `;
