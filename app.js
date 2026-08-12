@@ -702,16 +702,11 @@ function renderMatch() {
 
   const match = state.activeMatch;
 
-
   if (!match) {
-
     state.screen = "discover";
-
     render();
-
     return;
   }
-
 
   app.innerHTML = `
     <div class="app-shell">
@@ -724,33 +719,41 @@ function renderMatch() {
             Uni<span>Match</span>
           </div>
 
-
           <div class="match-card">
 
             <div class="match-avatar">
               ${escapeHtml(match.initials)}
             </div>
 
+            <div class="match-hearts">
+              ♥ ♥
+            </div>
 
             <h1>
               It's a match!
             </h1>
 
-
-            <p>
-              You matched with
-              <strong>
-                ${escapeHtml(match.name)}
-              </strong>.
+            <p class="match-name">
+              You and ${escapeHtml(match.name)}
             </p>
-
 
             <p class="subtext">
-              This is your one active match.
-              There is no new swiping until you decide
-              what happens with this connection.
+              You both liked each other.
             </p>
 
+            <div class="one-match-box">
+
+              <strong>
+                This is your one active match.
+              </strong>
+
+              <p>
+                Take your time getting to know each other.
+                You won't see new profiles while this match
+                is active.
+              </p>
+
+            </div>
 
             <button
               class="btn btn-primary"
@@ -758,7 +761,6 @@ function renderMatch() {
             >
               Start chatting
             </button>
-
 
             <button
               class="btn btn-secondary"
@@ -770,6 +772,11 @@ function renderMatch() {
           </div>
 
         </section>
+
+      </main>
+
+    </div>
+
 
 
         ${nav("match")}
