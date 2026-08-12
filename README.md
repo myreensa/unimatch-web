@@ -1,21 +1,21 @@
 # UniMatch
 
-UniMatch is a personal hobby project exploring a different approach to online dating:
+UniMatch is a personal hobby project, creating and exploring a different approach to modern online dating apps.
 
-> **One match at a time.**
+# UniMatch Idea
 
-The idea is to encourage meaningful connections by preventing users from endlessly swiping and opening multiple new conversations while already getting to know someone.
+The idea is to encourage meaningful connections by preventing users from endlessly swiping, and there falling into a consumer loophole. The idea is to prevent opening multiple new conversations, always chasing a "better" match and instead focusing on one current quality match at a time, Unimatch.
 
-## Current version
+Unimatch focuses on one real-time connection, which can suit many individuals better who feel overwhelmed on current dating apps and don't see them as serious.
 
-This is an early frontend prototype built with:
+## Unimatch Web Tech Stack
 
 - HTML
 - CSS
 - JavaScript
 - Browser localStorage
 
-It currently demonstrates:
+# Ideas
 
 - Welcome screen
 - Profile creation
@@ -71,8 +71,3 @@ Or use any local web server.
 - [ ] Capacitor Android build
 - [ ] Capacitor iOS build
 
-## Vision
-
-**Quality over quantity.**
-
-One match. One conversation. One genuine opportunity to build a real connection.
