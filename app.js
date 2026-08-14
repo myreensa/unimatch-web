@@ -1,29 +1,70 @@
+/*
+  UniMatch prototype
+  ------------------
+  LocalStorage prototype.
+
+  Features:
+  - Profile creation
+  - Up to 3 profile photos
+  - Photo preview
+  - Interests
+  - Profile prompts
+  - Discover profiles
+  - Multiple profile photos
+  - Like / Pass
+  - Mutual matching
+  - One active match
+  - Chat
+  - Edit Profile
+  - LocalStorage persistence
+*/
+
+
+/* =========================
+   DEMO PROFILES
+========================= */
+
 const profiles = [
+
   {
     id: 1,
     name: "Alex",
     age: 21,
     university: "University of Helsinki",
     field: "Computer Science",
-    bio: "Coffee, climbing, and building little projects. Looking for someone who enjoys good conversations.",
+
+    bio:
+      "Coffee, climbing, and building little projects. Looking for someone who enjoys good conversations.",
+
     initials: "A",
+
     photos: [
       "images/alex.jpg",
       "images/alex2.jpg",
       "images/alex3.jpg"
     ],
-    interests: ["Coffee", "Climbing", "Programming"],
+
+    interests: [
+      "Coffee",
+      "Climbing",
+      "Programming"
+    ],
+
     prompts: [
       {
         question: "My ideal Sunday...",
-        answer: "Coffee, climbing and a movie in the evening."
+        answer:
+          "Coffee, climbing and a movie in the evening."
       },
+
       {
         question: "Something I'm passionate about...",
-        answer: "Building things and learning how they work."
+        answer:
+          "Building things and learning how they work."
       }
     ]
   },
+
 
   {
     id: 2,
@@ -31,25 +72,39 @@ const profiles = [
     age: 22,
     university: "Aalto University",
     field: "Business",
-    bio: "I love live music, travelling and finding new places to eat.",
+
+    bio:
+      "I love live music, travelling and finding new places to eat.",
+
     initials: "M",
+
     photos: [
       "images/maya.jpg",
       "images/maya2.jpg",
       "images/maya3.jpg"
     ],
-    interests: ["Music", "Travel", "Food"],
+
+    interests: [
+      "Music",
+      "Travel",
+      "Food"
+    ],
+
     prompts: [
       {
         question: "My ideal weekend...",
-        answer: "Exploring a new city with good food and good company."
+        answer:
+          "Exploring a new city with good food and good company."
       },
+
       {
         question: "A random fact about me...",
-        answer: "I've visited more coffee shops than I can count."
+        answer:
+          "I've visited more coffee shops than I can count."
       }
     ]
   },
+
 
   {
     id: 3,
@@ -57,42 +112,96 @@ const profiles = [
     age: 23,
     university: "University of Helsinki",
     field: "Engineering",
-    bio: "Gym, gaming and photography. I'd rather have one great conversation than twenty random matches.",
+
+    bio:
+      "Gym, gaming and photography. I'd rather have one great conversation than twenty random matches.",
+
     initials: "L",
+
     photos: [
       "images/leo.jpg",
       "images/leo2.jpg",
       "images/leo3.jpg"
     ],
-    interests: ["Gym", "Gaming", "Photography"],
+
+    interests: [
+      "Gym",
+      "Gaming",
+      "Photography"
+    ],
+
     prompts: [
       {
         question: "My ideal Sunday...",
-        answer: "Gym in the morning, gaming in the afternoon and good food later."
+        answer:
+          "Gym in the morning, gaming in the afternoon and good food later."
       },
+
       {
         question: "Something I could talk about for hours...",
-        answer: "Technology, games and photography."
+        answer:
+          "Technology, games and photography."
       }
     ]
   }
+
 ];
+
+
+/* =========================
+   DEMO INCOMING LIKES
+========================= */
 
 const incomingLikes = [1];
 
+
+/* =========================
+   APP STATE
+========================= */
+
 const state = {
-  user: JSON.parse(localStorage.getItem("unimatch_user") || "null"),
-  activeMatch: JSON.parse(localStorage.getItem("unimatch_match") || "null"),
-  passed: JSON.parse(localStorage.getItem("unimatch_passed") || "[]"),
-  likes: JSON.parse(localStorage.getItem("unimatch_likes") || "[]"),
-  messages: JSON.parse(localStorage.getItem("unimatch_messages") || "[]"),
-  currentProfileIndex: 0,
+
+  user:
+    JSON.parse(
+      localStorage.getItem("unimatch_user") ||
+      "null"
+    ),
+
+  activeMatch:
+    JSON.parse(
+      localStorage.getItem("unimatch_match") ||
+      "null"
+    ),
+
+  passed:
+    JSON.parse(
+      localStorage.getItem("unimatch_passed") ||
+      "[]"
+    ),
+
+  likes:
+    JSON.parse(
+      localStorage.getItem("unimatch_likes") ||
+      "[]"
+    ),
+
+  messages:
+    JSON.parse(
+      localStorage.getItem("unimatch_messages") ||
+      "[]"
+    ),
+
   screen: "welcome"
+
 };
 
-const app = document.getElementById("app");
+
+const app =
+  document.getElementById("app");
+
 
 let newProfilePhotos = [];
+
 let currentPhotoIndex = 0;
 
 
@@ -101,6 +210,7 @@ let currentPhotoIndex = 0;
 ========================= */
 
 function saveState() {
+
   localStorage.setItem(
     "unimatch_user",
     JSON.stringify(state.user)
@@ -125,20 +235,28 @@ function saveState() {
     "unimatch_messages",
     JSON.stringify(state.messages)
   );
+
 }
 
 
 /* =========================
-   HTML ESCAPING
+   ESCAPE HTML
 ========================= */
 
 function escapeHtml(value) {
+
   return String(value)
+
     .replaceAll("&", "&amp;")
+
     .replaceAll("<", "&lt;")
+
     .replaceAll(">", "&gt;")
+
     .replaceAll('"', "&quot;")
+
     .replaceAll("'", "&#039;");
+
 }
 
 
@@ -147,12 +265,35 @@ function escapeHtml(value) {
 ========================= */
 
 function render() {
-  if (state.screen === "welcome") renderWelcome();
-  if (state.screen === "signup") renderSignup();
-  if (state.screen === "discover") renderDiscover();
-  if (state.screen === "match") renderMatch();
-  if (state.screen === "chat") renderChat();
-  if (state.screen === "profile") renderProfile();
+
+  if (state.screen === "welcome") {
+    renderWelcome();
+  }
+
+  if (state.screen === "signup") {
+    renderSignup();
+  }
+
+  if (state.screen === "discover") {
+    renderDiscover();
+  }
+
+  if (state.screen === "match") {
+    renderMatch();
+  }
+
+  if (state.screen === "chat") {
+    renderChat();
+  }
+
+  if (state.screen === "profile") {
+    renderProfile();
+  }
+
+  if (state.screen === "editProfile") {
+    renderEditProfile();
+  }
+
 }
 
 
@@ -161,8 +302,11 @@ function render() {
 ========================= */
 
 function renderWelcome() {
+
   app.innerHTML = `
+
     <div class="app-shell">
+
       <main class="phone">
 
         <section class="screen center-screen">
@@ -176,8 +320,10 @@ function renderWelcome() {
           </h1>
 
           <p class="subtext">
-            Focus on one person. Have one meaningful conversation.
-            No endless swiping while you're already getting to know someone.
+            Focus on one person.
+            Have one meaningful conversation.
+            No endless swiping while you're already
+            getting to know someone.
           </p>
 
           <button
@@ -202,8 +348,11 @@ function renderWelcome() {
         </section>
 
       </main>
+
     </div>
+
   `;
+
 }
 
 
@@ -212,8 +361,11 @@ function renderWelcome() {
 ========================= */
 
 function renderSignup() {
+
   app.innerHTML = `
+
     <div class="app-shell">
+
       <main class="phone">
 
         <section class="screen">
@@ -235,19 +387,25 @@ function renderSignup() {
 
           </div>
 
-          <h1>Create your profile</h1>
+
+          <h1>
+            Create your profile
+          </h1>
+
 
           <p class="subtext">
             Tell people a little about yourself.
             Your profile is your first impression.
           </p>
 
+
           <form
             class="form"
             onsubmit="createProfile(event)"
           >
 
-            <!-- PROFILE PHOTOS -->
+
+            <!-- PHOTOS -->
 
             <div class="field">
 
@@ -288,8 +446,8 @@ function renderSignup() {
                 id="name"
                 type="text"
                 placeholder="Alex"
-                required
                 maxlength="30"
+                required
               >
 
             </div>
@@ -428,28 +586,37 @@ function renderSignup() {
               Continue
             </button>
 
+
           </form>
 
         </section>
 
       </main>
+
     </div>
+
   `;
+
 }
 
 
 /* =========================
-   PROFILE PHOTO HANDLER
+   PROFILE PHOTO UPLOAD
 ========================= */
 
 function handleProfilePhotos(event) {
 
   const files =
-    Array.from(event.target.files || []);
+    Array.from(
+      event.target.files || []
+    );
+
 
   if (files.length > 3) {
 
-    alert("You can add up to 3 photos.");
+    alert(
+      "You can add up to 3 photos."
+    );
 
     event.target.value = "";
 
@@ -460,27 +627,32 @@ function handleProfilePhotos(event) {
     return;
   }
 
+
   newProfilePhotos = [];
 
-  if (!files.length) {
+
+  let loaded = 0;
+
+
+  if (files.length === 0) {
 
     renderProfilePhotoPreview();
 
     return;
   }
 
-  let loaded = 0;
 
   files.forEach(file => {
 
     if (!file.type.startsWith("image/")) {
 
-      alert("Please select image files only.");
-
       return;
     }
 
-    const reader = new FileReader();
+
+    const reader =
+      new FileReader();
+
 
     reader.onload = () => {
 
@@ -490,16 +662,20 @@ function handleProfilePhotos(event) {
 
       loaded++;
 
+
       if (loaded === files.length) {
 
         renderProfilePhotoPreview();
 
       }
+
     };
+
 
     reader.readAsDataURL(file);
 
   });
+
 }
 
 
@@ -514,16 +690,20 @@ function renderProfilePhotoPreview() {
       "profilePhotoPreview"
     );
 
+
   if (!preview) {
     return;
   }
+
 
   preview.innerHTML =
     newProfilePhotos
       .map(
         (photo, index) => `
 
-          <div class="profile-photo-preview-item">
+          <div
+            class="profile-photo-preview-item"
+          >
 
             <img
               src="${escapeHtml(photo)}"
@@ -543,6 +723,7 @@ function renderProfilePhotoPreview() {
         `
       )
       .join("");
+
 }
 
 
@@ -605,9 +786,13 @@ function createProfile(event) {
         .value
         .trim(),
 
-    interests: interests,
+    interests:
 
-    photos: [...newProfilePhotos],
+      interests,
+
+    photos:
+
+      [...newProfilePhotos],
 
     prompts: [
 
@@ -634,6 +819,7 @@ function createProfile(event) {
       }
 
     ]
+
   };
 
 
@@ -645,6 +831,7 @@ function createProfile(event) {
 
 
   render();
+
 }
 
 
@@ -664,18 +851,25 @@ function renderDiscover() {
 
   const available =
     profiles.filter(
+
       profile =>
+
         !state.passed.includes(
           profile.id
         ) &&
+
         !state.likes.includes(
           profile.id
         )
+
     );
 
 
   const profile =
     available[0];
+
+
+  currentPhotoIndex = 0;
 
 
   app.innerHTML = `
@@ -714,6 +908,7 @@ function renderDiscover() {
 
           ${
             profile
+
               ? `
 
                 <div class="discover-header">
@@ -730,11 +925,14 @@ function renderDiscover() {
                 </div>
 
 
-                <article class="profile-card">
+                <article
+                  class="profile-card"
+                >
 
 
-                  <div class="profile-photo">
-
+                  <div
+                    class="profile-photo"
+                  >
 
                     <img
                       id="profileImage"
@@ -763,10 +961,13 @@ function renderDiscover() {
                     </button>
 
 
-                    <div class="photo-indicators">
+                    <div
+                      class="photo-indicators"
+                    >
 
                       ${profile.photos
                         .map(
+
                           (_, index) => `
 
                             <span
@@ -778,27 +979,34 @@ function renderDiscover() {
                             ></span>
 
                           `
+
                         )
                         .join("")}
 
                     </div>
 
-
                   </div>
 
 
-                  <div class="profile-info">
+                  <div
+                    class="profile-info"
+                  >
 
-
-                    <div class="profile-name">
+                    <div
+                      class="profile-name"
+                    >
                       ${escapeHtml(
                         profile.name
-                      )}, ${profile.age}
+                      )},
+                      ${profile.age}
                     </div>
 
 
-                    <div class="profile-meta">
-                      🎓 ${escapeHtml(
+                    <div
+                      class="profile-meta"
+                    >
+                      🎓
+                      ${escapeHtml(
                         profile.university
                       )}
                     </div>
@@ -820,19 +1028,27 @@ function renderDiscover() {
 
                     ${
                       profile.prompts
+
                         ? profile.prompts
                             .map(
+
                               prompt => `
 
-                                <div class="profile-prompt">
+                                <div
+                                  class="profile-prompt"
+                                >
 
-                                  <div class="prompt-question">
+                                  <div
+                                    class="prompt-question"
+                                  >
                                     ${escapeHtml(
                                       prompt.question
                                     )}
                                   </div>
 
-                                  <div class="prompt-answer">
+                                  <div
+                                    class="prompt-answer"
+                                  >
                                     ${escapeHtml(
                                       prompt.answer
                                     )}
@@ -841,8 +1057,10 @@ function renderDiscover() {
                                 </div>
 
                               `
+
                             )
                             .join("")
+
                         : ""
                     }
 
@@ -850,34 +1068,44 @@ function renderDiscover() {
                     ${
                       profile.interests &&
                       profile.interests.length
+
                         ? `
 
-                          <div class="interests-title">
+                          <div
+                            class="interests-title"
+                          >
                             Interests
                           </div>
 
-                          <div class="interest-tags">
+
+                          <div
+                            class="interest-tags"
+                          >
 
                             ${profile.interests
                               .map(
+
                                 interest => `
 
-                                  <span class="interest-tag">
+                                  <span
+                                    class="interest-tag"
+                                  >
                                     ${escapeHtml(
                                       interest
                                     )}
                                   </span>
 
                                 `
+
                               )
                               .join("")}
 
                           </div>
 
                         `
+
                         : ""
                     }
-
 
                   </div>
 
@@ -932,7 +1160,8 @@ function renderDiscover() {
                   </h2>
 
                   <p class="subtext">
-                    You've reached the end of the demo.
+                    You've reached the end
+                    of the demo.
                   </p>
 
                   <button
@@ -959,11 +1188,12 @@ function renderDiscover() {
     </div>
 
   `;
+
 }
 
 
 /* =========================
-   DISCOVER PHOTO NAVIGATION
+   PHOTO NAVIGATION
 ========================= */
 
 function nextPhoto(id) {
@@ -996,6 +1226,7 @@ function nextPhoto(id) {
   updateProfilePhoto(
     profile
   );
+
 }
 
 
@@ -1027,6 +1258,7 @@ function previousPhoto(id) {
   updateProfilePhoto(
     profile
   );
+
 }
 
 
@@ -1061,13 +1293,17 @@ function updateProfilePhoto(
     (dot, index) => {
 
       dot.classList.toggle(
+
         "active",
+
         index ===
           currentPhotoIndex
+
       );
 
     }
   );
+
 }
 
 
@@ -1090,6 +1326,7 @@ function passProfile(id) {
 
 
   render();
+
 }
 
 
@@ -1117,6 +1354,7 @@ function checkForMatch(
     youLikedThem &&
     theyLikedYou
   );
+
 }
 
 
@@ -1128,7 +1366,8 @@ function likeProfile(id) {
 
   const profile =
     profiles.find(
-      p => p.id === id
+      profile =>
+        profile.id === id
     );
 
 
@@ -1179,7 +1418,9 @@ function likeProfile(id) {
     state.screen =
       "match";
 
-  } else {
+  }
+
+  else {
 
     state.screen =
       "discover";
@@ -1191,11 +1432,12 @@ function likeProfile(id) {
 
 
   render();
+
 }
 
 
 /* =========================
-   MATCH SCREEN
+   MATCH
 ========================= */
 
 function renderMatch() {
@@ -1221,7 +1463,9 @@ function renderMatch() {
 
       <main class="phone">
 
-        <section class="screen center-screen">
+        <section
+          class="screen center-screen"
+        >
 
 
           <div class="logo">
@@ -1229,8 +1473,9 @@ function renderMatch() {
           </div>
 
 
-          <div class="match-card">
-
+          <div
+            class="match-card"
+          >
 
             <div class="match-avatar">
               ${escapeHtml(
@@ -1239,7 +1484,9 @@ function renderMatch() {
             </div>
 
 
-            <div class="match-hearts">
+            <div
+              class="match-hearts"
+            >
               ♥ ♥
             </div>
 
@@ -1250,7 +1497,8 @@ function renderMatch() {
 
 
             <p class="match-name">
-              You and ${escapeHtml(
+              You and
+              ${escapeHtml(
                 match.name
               )}
             </p>
@@ -1261,16 +1509,19 @@ function renderMatch() {
             </p>
 
 
-            <div class="one-match-box">
+            <div
+              class="one-match-box"
+            >
 
               <strong>
                 This is your one active match.
               </strong>
 
               <p>
-                Take your time getting to know each other.
-                You won't see new profiles while this match
-                is active.
+                Take your time getting
+                to know each other.
+                You won't see new profiles
+                while this match is active.
               </p>
 
             </div>
@@ -1306,6 +1557,7 @@ function renderMatch() {
     </div>
 
   `;
+
 }
 
 
@@ -1336,7 +1588,9 @@ function renderChat() {
 
       <main class="phone">
 
-        <section class="screen chat">
+        <section
+          class="screen chat"
+        >
 
 
           <div class="topbar">
@@ -1380,6 +1634,7 @@ function renderChat() {
 
             ${state.messages
               .map(
+
                 message => `
 
                   <div
@@ -1389,14 +1644,13 @@ function renderChat() {
                         : "them"
                     }"
                   >
-
                     ${escapeHtml(
                       message.text
                     )}
-
                   </div>
 
                 `
+
               )
               .join("")}
 
@@ -1436,6 +1690,7 @@ function renderChat() {
     </div>
 
   `;
+
 }
 
 
@@ -1476,6 +1731,7 @@ function sendMessage(event) {
 
 
   render();
+
 }
 
 
@@ -1524,16 +1780,17 @@ function renderProfile() {
             ${
               user.photos &&
               user.photos.length
+
                 ? `
 
-                  <div class="profile-gallery">
+                  <div
+                    class="profile-gallery"
+                  >
 
                     ${user.photos
                       .map(
-                        (
-                          photo,
-                          index
-                        ) => `
+
+                        (photo, index) => `
 
                           <div
                             class="profile-gallery-item"
@@ -1543,9 +1800,7 @@ function renderProfile() {
                               src="${escapeHtml(
                                 photo
                               )}"
-                              alt="${escapeHtml(
-                                user.name
-                              )} photo ${
+                              alt="Profile photo ${
                                 index + 1
                               }"
                             >
@@ -1553,22 +1808,24 @@ function renderProfile() {
                           </div>
 
                         `
+
                       )
                       .join("")}
 
                   </div>
 
                 `
+
                 : `
 
-                  <div class="match-avatar">
-
+                  <div
+                    class="match-avatar"
+                  >
                     ${escapeHtml(
                       user.name
                         .charAt(0)
                         .toUpperCase()
                     )}
-
                   </div>
 
                 `
@@ -1578,7 +1835,8 @@ function renderProfile() {
             <h1>
               ${escapeHtml(
                 user.name
-              )}, ${user.age}
+              )},
+              ${user.age}
             </h1>
 
 
@@ -1604,14 +1862,15 @@ function renderProfile() {
 
 
             ${
-              user.prompts &&
-              user.prompts.length
+              user.prompts
+
                 ? user.prompts
                     .filter(
                       prompt =>
                         prompt.answer
                     )
                     .map(
+
                       prompt => `
 
                         <div
@@ -1637,8 +1896,10 @@ function renderProfile() {
                         </div>
 
                       `
+
                     )
                     .join("")
+
                 : ""
             }
 
@@ -1646,16 +1907,23 @@ function renderProfile() {
             ${
               user.interests &&
               user.interests.length
+
                 ? `
 
-                  <div class="interests-title">
+                  <div
+                    class="interests-title"
+                  >
                     Interests
                   </div>
 
-                  <div class="interest-tags">
+
+                  <div
+                    class="interest-tags"
+                  >
 
                     ${user.interests
                       .map(
+
                         interest => `
 
                           <span
@@ -1667,18 +1935,32 @@ function renderProfile() {
                           </span>
 
                         `
+
                       )
                       .join("")}
 
                   </div>
 
                 `
+
                 : ""
             }
 
 
           </div>
 
+
+          <!-- EDIT PROFILE -->
+
+          <button
+            class="btn btn-primary"
+            onclick="go('editProfile')"
+          >
+            Edit Profile
+          </button>
+
+
+          <!-- RESET -->
 
           <button
             class="btn btn-secondary"
@@ -1699,6 +1981,648 @@ function renderProfile() {
     </div>
 
   `;
+
+}
+
+
+/* =========================
+   EDIT PROFILE
+========================= */
+
+function renderEditProfile() {
+
+  const user =
+    state.user;
+
+
+  if (!user) {
+
+    state.screen =
+      "signup";
+
+    render();
+
+    return;
+  }
+
+
+  app.innerHTML = `
+
+    <div class="app-shell">
+
+      <main class="phone">
+
+        <section class="screen">
+
+
+          <div class="topbar">
+
+            <button
+              class="icon-btn"
+              onclick="go('profile')"
+            >
+              ←
+            </button>
+
+
+            <div class="logo">
+              Uni<span>Match</span>
+            </div>
+
+
+            <div></div>
+
+          </div>
+
+
+          <h1>
+            Edit Profile
+          </h1>
+
+
+          <p class="subtext">
+            Update your information
+            whenever you want.
+          </p>
+
+
+          <form
+            class="form"
+            onsubmit="saveProfileChanges(event)"
+          >
+
+
+            <!-- CURRENT PHOTOS -->
+
+            ${
+              user.photos &&
+              user.photos.length
+
+                ? `
+
+                  <div class="field">
+
+                    <label>
+                      Current photos
+                    </label>
+
+
+                    <div
+                      class="profile-gallery"
+                    >
+
+                      ${user.photos
+                        .map(
+
+                          (photo, index) => `
+
+                            <div
+                              class="profile-gallery-item"
+                            >
+
+                              <img
+                                src="${escapeHtml(
+                                  photo
+                                )}"
+                                alt="Photo ${
+                                  index + 1
+                                }"
+                              >
+
+                            </div>
+
+                          `
+
+                        )
+                        .join("")}
+
+                    </div>
+
+                  </div>
+
+                `
+
+                : ""
+            }
+
+
+            <!-- NEW PHOTOS -->
+
+            <div class="field">
+
+              <label for="editPhotos">
+                Replace photos
+              </label>
+
+
+              <input
+                id="editPhotos"
+                type="file"
+                accept="image/*"
+                multiple
+                onchange="handleEditPhotos(event)"
+              >
+
+
+              <small
+                class="profile-meta"
+              >
+                Select up to 3 new photos.
+                Leave empty to keep your current photos.
+              </small>
+
+
+              <div
+                id="editPhotoPreview"
+                class="profile-photo-preview"
+              ></div>
+
+            </div>
+
+
+            <!-- NAME -->
+
+            <div class="field">
+
+              <label for="editName">
+                First name
+              </label>
+
+
+              <input
+                id="editName"
+                type="text"
+                value="${escapeHtml(
+                  user.name
+                )}"
+                maxlength="30"
+                required
+              >
+
+            </div>
+
+
+            <!-- AGE -->
+
+            <div class="field">
+
+              <label for="editAge">
+                Age
+              </label>
+
+
+              <input
+                id="editAge"
+                type="number"
+                value="${user.age}"
+                min="18"
+                max="99"
+                required
+              >
+
+            </div>
+
+
+            <!-- UNIVERSITY -->
+
+            <div class="field">
+
+              <label for="editUniversity">
+                University
+              </label>
+
+
+              <input
+                id="editUniversity"
+                type="text"
+                value="${escapeHtml(
+                  user.university
+                )}"
+                required
+              >
+
+            </div>
+
+
+            <!-- FIELD -->
+
+            <div class="field">
+
+              <label for="editField">
+                What do you study?
+              </label>
+
+
+              <input
+                id="editField"
+                type="text"
+                value="${escapeHtml(
+                  user.field
+                )}"
+                required
+              >
+
+            </div>
+
+
+            <!-- BIO -->
+
+            <div class="field">
+
+              <label for="editBio">
+                About you
+              </label>
+
+
+              <textarea
+                id="editBio"
+                maxlength="300"
+                required
+              >${escapeHtml(
+                user.bio
+              )}</textarea>
+
+            </div>
+
+
+            <!-- INTERESTS -->
+
+            <div class="field">
+
+              <label for="editInterests">
+                Interests
+              </label>
+
+
+              <input
+                id="editInterests"
+                type="text"
+                value="${escapeHtml(
+                  (user.interests || [])
+                    .join(", ")
+                )}"
+                maxlength="100"
+              >
+
+            </div>
+
+
+            <!-- PROMPT 1 -->
+
+            <div class="field">
+
+              <label for="editPrompt1">
+                My ideal Sunday...
+              </label>
+
+
+              <textarea
+                id="editPrompt1"
+                maxlength="200"
+              >${
+                user.prompts &&
+                user.prompts[0]
+                  ? escapeHtml(
+                      user.prompts[0]
+                        .answer
+                    )
+                  : ""
+              }</textarea>
+
+            </div>
+
+
+            <!-- PROMPT 2 -->
+
+            <div class="field">
+
+              <label for="editPrompt2">
+                Something I'm passionate about...
+              </label>
+
+
+              <textarea
+                id="editPrompt2"
+                maxlength="200"
+              >${
+                user.prompts &&
+                user.prompts[1]
+                  ? escapeHtml(
+                      user.prompts[1]
+                        .answer
+                    )
+                  : ""
+              }</textarea>
+
+            </div>
+
+
+            <button
+              class="btn btn-primary"
+              type="submit"
+            >
+              Save Changes
+            </button>
+
+
+            <button
+              class="btn btn-secondary"
+              type="button"
+              onclick="go('profile')"
+            >
+              Cancel
+            </button>
+
+
+          </form>
+
+
+        </section>
+
+
+      </main>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================
+   EDIT PHOTO UPLOAD
+========================= */
+
+function handleEditPhotos(event) {
+
+  const files =
+    Array.from(
+      event.target.files || []
+    );
+
+
+  if (files.length > 3) {
+
+    alert(
+      "You can add up to 3 photos."
+    );
+
+    event.target.value = "";
+
+    newProfilePhotos = [];
+
+    renderEditPhotoPreview();
+
+    return;
+  }
+
+
+  if (files.length === 0) {
+
+    newProfilePhotos = [];
+
+    renderEditPhotoPreview();
+
+    return;
+  }
+
+
+  newProfilePhotos = [];
+
+  let loaded = 0;
+
+
+  files.forEach(file => {
+
+    if (
+      !file.type.startsWith(
+        "image/"
+      )
+    ) {
+
+      return;
+    }
+
+
+    const reader =
+      new FileReader();
+
+
+    reader.onload = () => {
+
+      newProfilePhotos.push(
+        reader.result
+      );
+
+      loaded++;
+
+
+      if (
+        loaded === files.length
+      ) {
+
+        renderEditPhotoPreview();
+
+      }
+
+    };
+
+
+    reader.readAsDataURL(file);
+
+  });
+
+}
+
+
+/* =========================
+   EDIT PHOTO PREVIEW
+========================= */
+
+function renderEditPhotoPreview() {
+
+  const preview =
+    document.getElementById(
+      "editPhotoPreview"
+    );
+
+
+  if (!preview) {
+    return;
+  }
+
+
+  preview.innerHTML =
+    newProfilePhotos
+      .map(
+
+        (photo, index) => `
+
+          <div
+            class="profile-photo-preview-item"
+          >
+
+            <img
+              src="${escapeHtml(
+                photo
+              )}"
+              alt="New photo ${
+                index + 1
+              }"
+            >
+
+            <span>
+              ${
+                index === 0
+                  ? "Main photo"
+                  : `Photo ${index + 1}`
+              }
+            </span>
+
+          </div>
+
+        `
+
+      )
+      .join("");
+
+}
+
+
+/* =========================
+   SAVE PROFILE CHANGES
+========================= */
+
+function saveProfileChanges(event) {
+
+  event.preventDefault();
+
+
+  const interests =
+    document
+      .getElementById(
+        "editInterests"
+      )
+      .value
+      .split(",")
+      .map(
+        interest =>
+          interest.trim()
+      )
+      .filter(
+        interest =>
+          interest.length > 0
+      );
+
+
+  state.user.name =
+    document
+      .getElementById(
+        "editName"
+      )
+      .value
+      .trim();
+
+
+  state.user.age =
+    Number(
+      document
+        .getElementById(
+          "editAge"
+        )
+        .value
+    );
+
+
+  state.user.university =
+    document
+      .getElementById(
+        "editUniversity"
+      )
+      .value
+      .trim();
+
+
+  state.user.field =
+    document
+      .getElementById(
+        "editField"
+      )
+      .value
+      .trim();
+
+
+  state.user.bio =
+    document
+      .getElementById(
+        "editBio"
+      )
+      .value
+      .trim();
+
+
+  state.user.interests =
+    interests;
+
+
+  state.user.prompts = [
+
+    {
+      question:
+        "My ideal Sunday...",
+
+      answer:
+        document
+          .getElementById(
+            "editPrompt1"
+          )
+          .value
+          .trim()
+    },
+
+    {
+      question:
+        "Something I'm passionate about...",
+
+      answer:
+        document
+          .getElementById(
+            "editPrompt2"
+          )
+          .value
+          .trim()
+    }
+
+  ];
+
+
+  /*
+    Only replace photos if
+    the user selected new ones.
+  */
+
+  if (
+    newProfilePhotos.length > 0
+  ) {
+
+    state.user.photos =
+      [...newProfilePhotos];
+
+  }
+
+
+  saveState();
+
+
+  newProfilePhotos = [];
+
+
+  state.screen =
+    "profile";
+
+
+  render();
+
 }
 
 
@@ -1763,6 +2687,7 @@ function nav(active) {
     </nav>
 
   `;
+
 }
 
 
@@ -1773,26 +2698,34 @@ function nav(active) {
 function go(screen) {
 
   if (
+
     !state.user &&
+
     [
       "discover",
       "match",
       "chat",
-      "profile"
+      "profile",
+      "editProfile"
     ].includes(screen)
+
   ) {
 
-    screen = "signup";
+    screen =
+      "signup";
 
   }
 
 
   if (
+
     screen === "discover" &&
     state.activeMatch
+
   ) {
 
-    screen = "match";
+    screen =
+      "match";
 
   }
 
@@ -1802,6 +2735,7 @@ function go(screen) {
 
 
   render();
+
 }
 
 
@@ -1843,6 +2777,7 @@ function endMatch() {
 
 
   render();
+
 }
 
 
@@ -1851,8 +2786,6 @@ function endMatch() {
 ========================= */
 
 function resetPrototype() {
-
-  newProfilePhotos = [];
 
   localStorage.removeItem(
     "unimatch_user"
@@ -1890,11 +2823,21 @@ function resetPrototype() {
   state.messages =
     [];
 
+
+  newProfilePhotos =
+    [];
+
+
+  currentPhotoIndex =
+    0;
+
+
   state.screen =
     "welcome";
 
 
   render();
+
 }
 
 
