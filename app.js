@@ -121,7 +121,6 @@ const profiles = [
 ];
 
 
-
 /*
   PROTOTYPE ONLY
 
@@ -141,7 +140,6 @@ const profiles = [
 const incomingLikes = [1];
 
 
-
 const state = {
   user: JSON.parse(localStorage.getItem("unimatch_user") || "null"),
   activeMatch: JSON.parse(localStorage.getItem("unimatch_match") || "null"),
@@ -153,9 +151,7 @@ const state = {
 };
 
 
-
 const app = document.getElementById("app");
-
 
 
 /* =========================
@@ -191,7 +187,6 @@ function saveState() {
 }
 
 
-
 /* =========================
    SECURITY / HTML ESCAPING
 ========================= */
@@ -207,7 +202,6 @@ function escapeHtml(value) {
 }
 
 
-
 /* =========================
    RENDER
 ========================= */
@@ -215,18 +209,12 @@ function escapeHtml(value) {
 function render() {
 
   if (state.screen === "welcome") renderWelcome();
-
   if (state.screen === "signup") renderSignup();
-
   if (state.screen === "discover") renderDiscover();
-
   if (state.screen === "match") renderMatch();
-
   if (state.screen === "chat") renderChat();
-
   if (state.screen === "profile") renderProfile();
 }
-
 
 
 /* =========================
@@ -281,7 +269,6 @@ function renderWelcome() {
     </div>
   `;
 }
-
 
 
 /* =========================
@@ -425,6 +412,36 @@ function renderSignup() {
             </div>
 
 
+            <div class="field">
+
+              <label for="prompt1">
+                My ideal Sunday...
+              </label>
+
+              <textarea
+                id="prompt1"
+                placeholder="Coffee, a walk, and a good movie..."
+                maxlength="200"
+              ></textarea>
+
+            </div>
+
+
+            <div class="field">
+
+              <label for="prompt2">
+                Something I'm passionate about...
+              </label>
+
+              <textarea
+                id="prompt2"
+                placeholder="Something I could talk about for hours..."
+                maxlength="200"
+              ></textarea>
+
+            </div>
+
+
             <button
               class="btn btn-primary"
               type="submit"
@@ -441,7 +458,6 @@ function renderSignup() {
     </div>
   `;
 }
-
 
 
 /* =========================
@@ -489,7 +505,25 @@ function createProfile(event) {
       .value
       .trim(),
 
-    interests: interests
+    interests: interests,
+
+    prompts: [
+      {
+        question: "My ideal Sunday...",
+        answer: document
+          .getElementById("prompt1")
+          .value
+          .trim()
+      },
+
+      {
+        question: "Something I'm passionate about...",
+        answer: document
+          .getElementById("prompt2")
+          .value
+          .trim()
+      }
+    ]
   };
 
 
@@ -503,19 +537,11 @@ function createProfile(event) {
 }
 
 
-
 /* =========================
    DISCOVER
 ========================= */
 
 function renderDiscover() {
-
-  /*
-    IMPORTANT:
-
-    If the user already has a match,
-    they cannot continue discovering.
-  */
 
   if (state.activeMatch) {
 
@@ -799,7 +825,6 @@ function renderDiscover() {
 }
 
 
-
 /* =========================
    PHOTO NAVIGATION
 ========================= */
@@ -900,7 +925,6 @@ function updateProfilePhoto(profile) {
 }
 
 
-
 /* =========================
    PASS
 ========================= */
@@ -921,36 +945,22 @@ function passProfile(id) {
 }
 
 
-
 /* =========================
    CHECK FOR MUTUAL MATCH
 ========================= */
 
 function checkForMatch(profileId) {
 
-  /*
-    Did YOU like them?
-  */
-
   const youLikedThem =
     state.likes.includes(profileId);
 
-
-  /*
-    Did THEY like you?
-  */
 
   const theyLikedYou =
     incomingLikes.includes(profileId);
 
 
-  /*
-    A match only happens if BOTH are true.
-  */
-
   return youLikedThem && theyLikedYou;
 }
-
 
 
 /* =========================
@@ -970,11 +980,6 @@ function likeProfile(id) {
   }
 
 
-  /*
-    UniMatch rule:
-    You cannot have multiple active matches.
-  */
-
   if (state.activeMatch) {
 
     alert(
@@ -986,10 +991,6 @@ function likeProfile(id) {
   }
 
 
-  /*
-    Save the like.
-  */
-
   if (!state.likes.includes(id)) {
 
     state.likes.push(id);
@@ -997,15 +998,7 @@ function likeProfile(id) {
   }
 
 
-  /*
-    Now check whether they also liked you.
-  */
-
   if (checkForMatch(id)) {
-
-    /*
-      MUTUAL LIKE = MATCH
-    */
 
     state.activeMatch = profile;
 
@@ -1024,12 +1017,6 @@ function likeProfile(id) {
 
   } else {
 
-    /*
-      They haven't liked you yet.
-
-      We don't create a match.
-    */
-
     state.screen = "discover";
 
   }
@@ -1040,7 +1027,6 @@ function likeProfile(id) {
 
   render();
 }
-
 
 
 /* =========================
@@ -1153,7 +1139,6 @@ function renderMatch() {
 
   `;
 }
-
 
 
 /* =========================
@@ -1281,7 +1266,6 @@ function renderChat() {
 }
 
 
-
 /* =========================
    SEND MESSAGE
 ========================= */
@@ -1320,7 +1304,6 @@ function sendMessage(event) {
 
   render();
 }
-
 
 
 /* =========================
@@ -1394,18 +1377,53 @@ function renderProfile() {
 
 
             ${
+              user.prompts &&
+              user.prompts.length
+                ? user.prompts
+                    .map(
+                      prompt => `
+
+                        <div class="profile-prompt">
+
+                          <div class="prompt-question">
+                            ${escapeHtml(prompt.question)}
+                          </div>
+
+                          <div class="prompt-answer">
+                            ${escapeHtml(prompt.answer)}
+                          </div>
+
+                        </div>
+
+                      `
+                    )
+                    .join("")
+                : ""
+            }
+
+
+            ${
               user.interests &&
               user.interests.length
                 ? `
 
-                  <div class="badge">
+                  <div class="interests-title">
+                    Interests
+                  </div>
+
+                  <div class="interest-tags">
 
                     ${user.interests
                       .map(
-                        interest =>
-                          escapeHtml(interest)
+                        interest => `
+
+                          <span class="interest-tag">
+                            ${escapeHtml(interest)}
+                          </span>
+
+                        `
                       )
-                      .join(" · ")}
+                      .join("")}
 
                   </div>
 
@@ -1438,7 +1456,6 @@ function renderProfile() {
 
   `;
 }
-
 
 
 /* =========================
@@ -1505,7 +1522,6 @@ function nav(active) {
 }
 
 
-
 /* =========================
    GO TO SCREEN
 ========================= */
@@ -1527,13 +1543,6 @@ function go(screen) {
   }
 
 
-  /*
-    Extra protection:
-    If a user tries to access Discover
-    while they already have a match,
-    show the match instead.
-  */
-
   if (
     screen === "discover" &&
     state.activeMatch
@@ -1549,7 +1558,6 @@ function go(screen) {
 
   render();
 }
-
 
 
 /* =========================
@@ -1577,26 +1585,11 @@ function endMatch() {
   }
 
 
-  /*
-    Remove active match.
-  */
-
   state.activeMatch = null;
 
 
-  /*
-    Remove conversation.
-  */
-
   state.messages = [];
 
-
-  /*
-    We keep the likes.
-
-    This means the prototype remembers
-    that you previously liked that person.
-  */
 
   saveState();
 
@@ -1606,7 +1599,6 @@ function endMatch() {
 
   render();
 }
-
 
 
 /* =========================
@@ -1660,7 +1652,6 @@ function resetPrototype() {
 
   render();
 }
-
 
 
 /* =========================
